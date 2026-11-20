@@ -1,41 +1,49 @@
-<h1>Đăng nhập Computer Shop</h1>
-@if (session('success'))
-    <p role="status">{{ session('success') }}</p>
-@endif
-<form method="POST" action="{{ route('login.submit') }}" novalidate>
-    @csrf
+@extends('layouts.auth')
 
-    <div>
-        <label for="email">Email</label>
-        <input
-            id="email"
-            type="email"
+@section('title', 'Đăng nhập')
+
+@section('content')
+    @if (session('success'))
+        <p
+            role="status"
+            class="mb-5 rounded-xl border border-emerald-200 bg-emerald-50
+                   px-4 py-3 text-sm text-emerald-800"
+        >
+            {{ session('success') }}
+        </p>
+    @endif
+
+    <form
+        method="POST"
+        action="{{ route('login.submit') }}"
+        class="space-y-5"
+        novalidate
+    >
+        @csrf
+
+        <x-auth-input
             name="email"
-            value="{{ old('email') }}"
+            label="Email"
+            type="email"
+            placeholder="Nhập địa chỉ email"
             autocomplete="username"
-            required
-        >
+        />
 
-        @error('email')
-            <p>{{ $message }}</p>
-        @enderror
-    </div>
-
-    <div>
-        <label for="password">Mật khẩu</label>
-        <input
-            id="password"
-            type="password"
+        <x-auth-input
             name="password"
+            label="Mật khẩu"
+            type="password"
+            placeholder="Nhập mật khẩu"
             autocomplete="current-password"
-            required
-        >
+        />
 
-        @error('password')
-            <p>{{ $message }}</p>
-        @enderror
-    </div>
+        <button type="submit" class="auth-button">
+            Đăng nhập
+        </button>
 
-    <button type="submit">Đăng nhập</button>
-</form>
-<p>Chưa có tài khoản? <a href="{{ route('register') }}">Đăng ký</a></p>
+        <p class="text-center text-sm text-slate-600">
+            Chưa có tài khoản?
+            <a href="{{ route('register') }}" class="auth-link">Đăng ký</a>
+        </p>
+    </form>
+@endsection
