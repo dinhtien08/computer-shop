@@ -1,45 +1,54 @@
-<h1>Đăng ký tài khoản</h1>
+@extends('layouts.auth')
 
-<form method="POST" action="{{ route('register.submit') }}" novalidate>
-    @csrf
+@section('title', 'Đăng ký tài khoản')
 
-    <div>
-        <label for="name">Họ tên</label>
-        <input id="name" type="text" name="name"
-               value="{{ old('name') }}" autocomplete="name" required>
+@section('content')
+    <form
+        method="POST"
+        action="{{ route('register.submit') }}"
+        class="space-y-5"
+        novalidate
+    >
+        @csrf
 
-        @error('name')
-            <p>{{ $message }}</p>
-        @enderror
-    </div>
+        <x-auth-input
+            name="name"
+            label="Họ tên"
+            placeholder="Nhập họ tên của bạn"
+            autocomplete="name"
+        />
 
-    <div>
-        <label for="email">Email</label>
-        <input id="email" type="email" name="email"
-               value="{{ old('email') }}" autocomplete="email" required>
+        <x-auth-input
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="Nhập địa chỉ email"
+            autocomplete="email"
+        />
 
-        @error('email')
-            <p>{{ $message }}</p>
-        @enderror
-    </div>
+        <x-auth-input
+            name="password"
+            label="Mật khẩu"
+            type="password"
+            placeholder="Nhập ít nhất 8 ký tự"
+            autocomplete="new-password"
+        />
 
-    <div>
-        <label for="password">Mật khẩu</label>
-        <input id="password" type="password" name="password"
-               autocomplete="new-password" required>
+        <x-auth-input
+            name="password_confirmation"
+            label="Xác nhận mật khẩu"
+            type="password"
+            placeholder="Nhập lại mật khẩu"
+            autocomplete="new-password"
+        />
 
-        @error('password')
-            <p>{{ $message }}</p>
-        @enderror
-    </div>
+        <button type="submit" class="auth-button">
+            Đăng ký
+        </button>
 
-    <div>
-        <label for="password_confirmation">Xác nhận mật khẩu</label>
-        <input id="password_confirmation" type="password"
-               name="password_confirmation" autocomplete="new-password" required>
-    </div>
-
-    <button type="submit">Đăng ký</button>
-</form>
-
-<p>Đã có tài khoản? <a href="{{ route('login') }}">Đăng nhập</a></p>
+        <p class="text-center text-sm text-slate-600">
+            Đã có tài khoản?
+            <a href="{{ route('login') }}" class="auth-link">Đăng nhập</a>
+        </p>
+    </form>
+@endsection
