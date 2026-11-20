@@ -1,7 +1,16 @@
-<h1>Thêm danh mục</h1>
+@extends('layouts.admin')
 
-<form method="POST" action="{{ route('admin.categories.store') }}" novalidate>
-    @csrf
+@section('title', 'Thêm danh mục')
 
-    @include('admin.categories.form', ['buttonText' => 'Thêm danh mục'])
-</form>
+@section('content')
+    <form
+        method="POST"
+        action="{{ route('admin.categories.store') }}"
+        class="panel edit-form"
+        novalidate
+    >
+        @csrf
+
+        @include('admin.categories.form', ['buttonText' => 'Thêm danh mục'])
+    </form>
+@endsection

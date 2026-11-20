@@ -1,8 +1,27 @@
-<h1>Chi tiết danh mục</h1>
+@extends('layouts.admin')
 
-<p>Mã danh mục: {{ $category->id }}</p>
-<p>Tên danh mục: {{ $category->name }}</p>
-<p>Số sản phẩm: {{ $category->products_count }}</p>
+@section('title', 'Chi tiết danh mục')
 
-<a href="{{ route('admin.categories.edit', $category) }}">Sửa danh mục</a> |
-<a href="{{ route('admin.categories.index') }}">Quay lại danh sách</a>
+@section('actions')
+    <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-primary">
+        Sửa danh mục
+    </a>
+@endsection
+
+@section('content')
+    <section class="panel">
+        <h2>{{ $category->name }}</h2>
+
+        <dl>
+            <dt>Mã danh mục</dt>
+            <dd>{{ $category->id }}</dd>
+
+            <dt>Số sản phẩm thuộc danh mục</dt>
+            <dd>{{ $category->products_count }}</dd>
+        </dl>
+
+        <a href="{{ route('admin.categories.index') }}" class="btn">
+            Quay lại danh sách
+        </a>
+    </section>
+@endsection
