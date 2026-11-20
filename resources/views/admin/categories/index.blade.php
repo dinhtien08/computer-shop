@@ -1,56 +1,49 @@
-<h1>Quản lý danh mục</h1>
+@extends('layouts.admin')
 
-<p>
-    <a href="{{ route('admin.dashboard') }}">Trang quản trị</a> |
-    <a href="{{ route('admin.categories.create') }}">Thêm danh mục</a>
-</p>
+@section('title', 'Quản lý danh mục')
 
-@if (session('success'))
-    <p role="status">{{ session('success') }}</p>
-@endif
+@section('actions')
+    <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">
+        Thêm danh mục
+    </a>
+@endsection
 
-@if (session('error'))
-    <p role="alert">{{ session('error') }}</p>
-@endif
+@section('content')
+    <section class="panel" aria-label="Danh sách danh mục">
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên danh mục</th>
+                        <th scope="col" class="numeric">Số sản phẩm</th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                </thead>
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tên danh mục</th>
-            <th>Số sản phẩm</th>
-            <th>Thao tác</th>
-        </tr>
-    </thead>
+                <tbody>
+                    @forelse ($categories as $category)
+                        <tr>
+                            <td>{{ $categories->firstItem() + $loop->index }}</td>
+                            <td>{{ $category->name }}</td>
+                            <td class="numeric">{{ $category->products_count }}</td>
+                            <td>
+                                @include('partials.admin-row-actions', [
+                                    'showUrl' => route('admin.categories.show', $category),
+                                    'editUrl' => route('admin.categories.edit', $category),
+                                    'deleteUrl' => route('admin.categories.destroy', $category),
+                                ])
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="empty">Chưa có danh mục nào.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
-    <tbody>
-        @forelse ($categories as $category)
-            <tr>
-                <td>{{ $category->id }}</td>
-                <td>{{ $category->name }}</td>
-                <td>{{ $category->products_count }}</td>
-                <td>
-                    <a href="{{ route('admin.categories.show', $category) }}">Xem</a>
-                    <a href="{{ route('admin.categories.edit', $category) }}">Sửa</a>
-
-                    <form
-                        method="POST"
-                        action="{{ route('admin.categories.destroy', $category) }}"
-                        onsubmit="return confirm('Bạn có muốn xóa danh mục này?')"
-                    >
-                        @csrf
-                        @method('DELETE')
-
-                        <button type="submit">Xóa</button>
-                    </form>
-                </td>
-            </tr>
-        @empty
-            <tr>
-                <td colspan="4">Chưa có danh mục nào.</td>
-            </tr>
-        @endforelse
-    </tbody>
-</table>
-
-{{ $categories->links() }}
+        @include('partials.admin-pagination', ['paginator' => $categories])
+    </section>
+@endsection

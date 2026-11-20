@@ -7,12 +7,16 @@
         type="text"
         value="{{ old('name', $category->name ?? '') }}"
         placeholder="Ví dụ: Dell"
+        required
+        @error('name') aria-invalid="true" aria-describedby="name-error" @enderror
     >
 
     @error('name')
-        <p role="alert">{{ $message }}</p>
+        <p id="name-error" class="field-error">{{ $message }}</p>
     @enderror
 </div>
 
-<button type="submit">{{ $buttonText }}</button>
-<a href="{{ route('admin.categories.index') }}">Quay lại</a>
+<div class="row-actions">
+    <button type="submit" class="btn btn-primary">{{ $buttonText }}</button>
+    <a href="{{ route('admin.categories.index') }}" class="btn">Hủy</a>
+</div>

@@ -1,12 +1,17 @@
-<h1>Sửa danh mục</h1>
+@extends('layouts.admin')
 
-<form
-    method="POST"
-    action="{{ route('admin.categories.update', $category) }}"
-    novalidate
->
-    @csrf
-    @method('PUT')
+@section('title', 'Sửa danh mục')
 
-    @include('admin.categories.form', ['buttonText' => 'Lưu thay đổi'])
-</form>
+@section('content')
+    <form
+        method="POST"
+        action="{{ route('admin.categories.update', $category) }}"
+        class="panel edit-form"
+        novalidate
+    >
+        @csrf
+        @method('PUT')
+
+        @include('admin.categories.form', ['buttonText' => 'Lưu thay đổi'])
+    </form>
+@endsection

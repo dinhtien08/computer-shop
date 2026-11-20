@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function () {
     ->group(function () {
         Route::view('/', 'admin.dashboard')->name('dashboard');
         Route::resource('categories', CategoryController::class);
+        Route::resource('products', ProductController::class);
     });
     Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
